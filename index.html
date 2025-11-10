@@ -117,18 +117,21 @@
   const btn = document.getElementById('generate');
   const body = document.body;
 
-  const userName = prompt("Введіть ваше ім’я:") || "Гравець";
+  let userName = prompt("Введіть ваше ім’я:");
+  while (!userName || userName.trim() == "") {
+      userName = prompt("Будь ласка, введіть коректне ім’я!");
+    }
 
   function randomCard() {
     const card = cards[Math.floor(Math.random() * cards.length)];
     const suit = suits[Math.floor(Math.random() * suits.length)];
-    const color = (suit === '♥' || suit === '♦') ? 'red' : 'black';
+    const color = (suit == '♥' || suit == '♦') ? 'red' : 'black';
     return { ...card, suit, color };
   }
 
   function showCard(element, card) {
     element.style.color = card.color;
-    element.style.borderColor = card.color === 'red' ? '#d22' : '#111';
+    element.style.borderColor = card.color == 'red' ? '#d22' : '#111';
     element.style.boxShadow = `0 0 20px ${card.color}`;
     element.innerHTML = `
       <div class="corner top">${card.name}${card.suit}</div>
@@ -162,7 +165,7 @@
 
     roundEl.textContent = `Спроба ${round} з 3`;
 
-    if (round === 3) {
+    if (round == 3) {
       btn.disabled = true;
       btn.style.background = "#999";
       btn.style.cursor = "default";
